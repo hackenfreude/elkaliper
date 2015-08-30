@@ -25,3 +25,5 @@ bootstrap:
         links:
                 - rabbit
         command: rabbitset logs
+generator:
+        build: generator/
