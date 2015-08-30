@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+function create () {
+	url="http://rabbit:15672/api/exchanges/%2f/$1"
+	curl -i -u guest:guest -H "content-type:application/json" -XPUT -d'{"type":"fanout","durable":true}' $url
+
+	return $?
+}
+
+if [[ $# != 1 ]]
+then
+	echo "$0 requries 1 argument (the name of the exchange to declare) but received these $# arguments: '$*'"
+	exit 1
+fi
+
+limit=10
+attempts=0
+
+while [ $attempts -lt $limit ]
+do
+	attempts=$(($attempts+1))
+	create $1
+	result=$?
+	if [ $result == 0 ]
+	then
+		exit 0	
+	fi
+	echo "sleeping 5 because attempt ${attempts} failed"
+	sleep 5
+done
+
+exit 1

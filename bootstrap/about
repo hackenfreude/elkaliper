@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo 'use the Dockerfile to provide a startup command for the rabbitset script.'
+
+exit 1
