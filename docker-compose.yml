@@ -2,6 +2,7 @@ rabbit:
         image: rabbitmq:3.5.4-management
         ports:
                 - "15672:15672"
+                - "5672:5672"
 logstash:
         image: logstash:latest
         command: logstash -f /etc/logstash/conf.d/logstash.conf
@@ -27,3 +28,5 @@ bootstrap:
         command: rabbitset logs
 generator:
         build: generator/
+        links:
+                - rabbit
