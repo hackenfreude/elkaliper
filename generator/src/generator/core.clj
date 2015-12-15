@@ -10,8 +10,9 @@
         ch (lch/open conn)
         routing-key ""
         exchange "logs"]
+    (Thread/sleep 10000)
     (println (format "[main] Connected. Channel id: %d" (.getChannelNumber ch)))
-    (lb/publish ch exchange routing-key "Hello!")
+    (dotimes [n 1000] (lb/publish ch exchange routing-key "Hello!"))
     (Thread/sleep 2000)
     (println "[main] Disconnecting...")
     (rmq/close ch)
